@@ -49,6 +49,10 @@ class Main(QMainWindow , main_ui):
             ['بادئ', 'باديء'],
             ['ناشئ', 'ناشيء'],
             ['لاجئ', 'لاجيء'],
+            ['الهندسيه', 'الهندسية'],
+            ['المستويه', 'المستوية'],
+            ['المثلثيه', 'المثلثية'],
+            ['اللاحقه', 'اللاحقة'],
         ]
         try:
             inputVar = str(inputVar)
@@ -74,16 +78,11 @@ class Main(QMainWindow , main_ui):
         new, errorCount, correctCount, lenOfsentence = self.correct(self.line1.text())
 
         self.line2.setText(new)
-        print(errorCount, correctCount, lenOfsentence)
+        #print(errorCount, correctCount, lenOfsentence)
             # set text to labels
-       # self.lbl_errors.setText(errorCount)
-       # self.lbl_correct.setText(correctCount)
-       # self.lbl_len.setText(lenOfsentence)
-
-
-
-
-
+        self.lbl_errors.setText("{}".format(errorCount))
+        self.lbl_correct.setText("{}".format(correctCount))
+        self.lbl_len.setText("{}".format(lenOfsentence))
 
 
 def main():
