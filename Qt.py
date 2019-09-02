@@ -19,10 +19,19 @@ class Main(QMainWindow , main_ui):
         QMainWindow.__init__(self)
         self.setupUi(self)
 
+        #lineEdit
         self.line1 = self.findChild(QLineEdit, 'lineEdit_1')
         self.line2 = self.findChild(QLineEdit, 'lineEdit_2')
+
+        # buttons
         self.button = self.findChild(QPushButton, 'pushButton_1')
         self.button.clicked.connect(self.bar)
+
+        # labels
+        self.lbl_errors = self.findChild(QLabel, 'label_5')
+        self.lbl_correct = self.findChild(QLabel, 'label_3')
+        self.lbl_len = self.findChild(QLabel, 'label_2')
+
         self.show()
 
     def convertArrayToStr(arr):
@@ -31,7 +40,7 @@ class Main(QMainWindow , main_ui):
             strIng += a + ' '
         return strIng
 
-    def correct(inputVar):
+    def correct(self, inputVar):
         targetWords = [
             ['احمد', 'أحمد'],
             ['المدرسه', 'المدرسة'],
@@ -45,7 +54,7 @@ class Main(QMainWindow , main_ui):
             inputVar = str(inputVar)
             errorCount = 0
             sentenceSplitter = araby.tokenize(inputVar)
-            print(sentenceSplitter)
+
             correctCount = len(sentenceSplitter)
             lenOfsentence = len(sentenceSplitter)
             for n, s in enumerate(sentenceSplitter):
@@ -54,21 +63,28 @@ class Main(QMainWindow , main_ui):
                         errorCount += 1
                         correctCount -= 1
                         sentenceSplitter[n] = x[1]
-            print(convertArrayToStr(sentenceSplitter))
-            print('Wrong : {}, Correct : {}, Total : {}'.format( \
-                errorCount, correctCount, lenOfsentence))
+            return (
+            convertArrayToStr(sentenceSplitter), errorCount, correctCount, lenOfsentence
+         )
         except Exception as e:
             print('we have error in ', e)
 
     def bar(self):
-        #new =self. correct()
-        #new = self.correct(self.line.text())
-        #self.line2.setText(new)
-        #print(self.line.text())
-        print(self.correct(self.line1.text()))
 
-        #return('Wrong : {}, Correct : {}, Total : {}'.format( \
-            #errorCount, correctCount, lenOfsentence))
+        new, errorCount, correctCount, lenOfsentence = self.correct(self.line1.text())
+
+        self.line2.setText(new)
+        print(errorCount, correctCount, lenOfsentence)
+            # set text to labels
+       # self.lbl_errors.setText(errorCount)
+       # self.lbl_correct.setText(correctCount)
+       # self.lbl_len.setText(lenOfsentence)
+
+
+
+
+
+
 
 def main():
     app = QApplication(argv)
@@ -77,4 +93,3 @@ def main():
     exit(app.exec_())
 if __name__ == "__main__":
     main()
-
